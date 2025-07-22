@@ -66,6 +66,25 @@ Request a comprehensive English report on "quantum computing":
 
 ---
 
+## Azure Prerequisites
+
+Before deploying the Helm chart, ensure you have completed the following steps to enable the Deep Research tool in Azure AI Foundry:
+
+- **Azure Subscription**: You must have an Azure subscription with permission to create AI Foundry projects, Grounding with Bing Search resources, and model deployments in either the **West US** or **Norway East** regions.
+- **Model Access**: 
+  - If you already have access to the Azure OpenAI `o3` model, you can use the `o3-deep-research` model directly. Otherwise, [request access here](https://aka.ms/OAI/deepresearchaccess).
+- **Required Azure Resources**:
+  - An [AI Foundry project](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/environment-setup) in West US or Norway East.
+  - A [Grounding with Bing Search](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/bing-grounding) resource connected to your project.
+  - Model deployments for:
+    - `o3-deep-research` (version `2025-06-26`) in West US or Norway East.
+    - `gpt-4o` model for intent clarification, deployed in the same region.
+- **Region Restriction**: All resources (project, models, Bing Search) must be in the same Azure subscription and region (West US or Norway East).
+- **Billing and Compliance**: Usage of Grounding with Bing Search may incur additional costs and involves data transfer outside the Azure compliance boundary. Review the [Grounding with Bing Search Terms of Use](https://www.microsoft.com/en-us/bing/apis/grounding-legal) and [pricing](https://www.microsoft.com/bing/apis/grounding-pricing).
+- **Official Setup Guide**: For detailed, up-to-date instructions, see the [Deep Research tool documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/deep-research).
+
+---
+
 ## Prerequisites
 
 - Docker (with buildx enabled for multi-arch builds)
