@@ -84,3 +84,5 @@ helm/deep-research-mcp/.env.yaml
 
 # Ignore local research summary
 research_summary.md
+
+.venv/
