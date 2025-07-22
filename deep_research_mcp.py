@@ -89,7 +89,7 @@ async def fetch_and_print_new_agent_response(
     return response.id
 
 
-def create_research_summary(message: ThreadMessage, filepath: str = "research_summary.md") -> None:
+def create_research_summary(message: ThreadMessage) -> str:
     if not message:
         logger.info("No message content provided, cannot create research summary.")
         return

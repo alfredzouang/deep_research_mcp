@@ -90,25 +90,8 @@ https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster
 
 ---
 
-### 1. Register the Workload Identity and OIDC Issuer Features
 
-```sh
-az feature register --namespace "Microsoft.ContainerService" --name "EnableWorkloadIdentityPreview"
-az feature register --namespace "Microsoft.ContainerService" --name "EnableOIDCIssuerPreview"
-az provider register --namespace Microsoft.ContainerService
-az provider register --namespace Microsoft.ManagedIdentity
-```
-
-Wait for the features to be in the "Registered" state before proceeding:
-
-```sh
-az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/EnableWorkloadIdentityPreview')].{Name:name,State:properties.state}"
-az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/EnableOIDCIssuerPreview')].{Name:name,State:properties.state}"
-```
-
----
-
-### 2. Enable OIDC Issuer and Workload Identity on the AKS Cluster
+### 1. Enable OIDC Issuer and Workload Identity on the AKS Cluster
 
 ```sh
 az aks update \
@@ -120,7 +103,7 @@ az aks update \
 
 ---
 
-### 3. Verify the OIDC Issuer URL
+### 2. Verify the OIDC Issuer URL
 
 ```sh
 az aks show \
@@ -132,7 +115,7 @@ az aks show \
 
 ---
 
-### 4. Create a User-Assigned Managed Identity
+### 3. Create a User-Assigned Managed Identity
 
 ```sh
 az identity create \
@@ -151,7 +134,7 @@ az identity show \
 
 ---
 
-### 5. Create a Federated Identity Credential
+### 4. Create a Federated Identity Credential
 
 You must create a federated identity credential for the managed identity, using the OIDC issuer URL, Kubernetes service account name, and namespace.  
 This can be done via the Azure portal, Azure CLI, or ARM/Bicep templates.
@@ -170,7 +153,7 @@ az identity federated-credential create \
 
 ---
 
-### 6. Annotate the Kubernetes Service Account
+### 5. Annotate the Kubernetes Service Account
 
 ```sh
 kubectl annotate serviceaccount <KSA_NAME> \
@@ -180,7 +163,7 @@ kubectl annotate serviceaccount <KSA_NAME> \
 
 ---
 
-### 7. Assign Azure RBAC Permissions
+### 6. Assign Azure RBAC Permissions
 
 Assign the necessary Azure RBAC roles to the managed identity so your workload can access required Azure resources.  
 For example, to grant access to Azure Key Vault:
@@ -194,7 +177,7 @@ az role assignment create \
 
 ---
 
-### 8. Test Workload Identity Integration
+### 7. Test Workload Identity Integration
 
 Deploy a test pod using the annotated service account and verify it can access Azure resources using the managed identity.
 
@@ -234,7 +217,6 @@ These are loaded into the container via a Kubernetes ConfigMap.
 - Installs Python dependencies in a virtualenv
 - Copies only necessary files to the final image
 - Exposes port **8001** (matching the FastMCP server)
-- Supports both `arm64` (Mac M1) and `amd64` architectures
 
 ---
 
@@ -265,7 +247,7 @@ Located in `helm/deep-research-mcp/`:
    ./deploy.sh
    ```
    This script will:
-   - Build a multi-arch Docker image (`arm64`, `amd64`)
+   - Build a multi-arch Docker image (`amd64`)
    - Push to `tradingaz.azurecr.io`
    - Update Helm values with the image info
    - Copy `.env` into the Helm chart for ConfigMap injection
