@@ -25,7 +25,6 @@ COPY --from=builder /opt/venv /opt/venv
 
 # Copy application code
 COPY deep_research_mcp.py .
-COPY .env ./
 # If there are other needed files, add COPY lines here
 
 # Activate virtualenv by default
