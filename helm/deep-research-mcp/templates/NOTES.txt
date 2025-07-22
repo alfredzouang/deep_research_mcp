@@ -1,0 +1,19 @@
+{{- if (index .Values "service") }}
+{{- $svc := (lookup "v1" "Service" .Release.Namespace (index .Values "service").name) }}
+{{- if and $svc $svc.status $svc.status.loadBalancer $svc.status.loadBalancer.ingress }}
+{{- $ip := (index $svc.status.loadBalancer.ingress 0).ip }}
+{{- if $ip }}
+MCP service is available at: http://{{ $ip }}:8001/mcp
+
+You can use mcp inspector:
+  npx @modelcontextprotocol/inspector
+to connect and test your mcp service.
+{{- else }}
+MCP service external IP is not yet assigned. Please check the service status.
+{{- end }}
+{{- else }}
+MCP service external IP is not yet assigned. Please check the service status.
+{{- end }}
+{{- else }}
+MCP service information is not available.
+{{- end }}

@@ -1,0 +1,7 @@
+azure-ai-projects==1.0.0b12
+azure-ai-agents==1.1.0b4
+azure-identity
+python-dotenv
+fastmcp
+asyncio
+aiohttp

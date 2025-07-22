@@ -1,0 +1,13 @@
+image:
+  repository: tradingaz.azurecr.io/deep-research-mcp
+  tag: "1753169645"
+  pullPolicy: IfNotPresent
+service:
+  name: deep-research-mcp
+  type: LoadBalancer
+  port: 8001
+env:
+# Example: set environment variables here or use a Secret/ConfigMap
+# - name: EXAMPLE_ENV
+#   value: "example"
+workloadIdentityClientId: "3fa5e92f-ff9b-48b1-a070-464eb71e3edc"

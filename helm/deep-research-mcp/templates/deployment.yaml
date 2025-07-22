@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "deep-research-mcp.fullname" . }}
+  labels:
+    app: {{ include "deep-research-mcp.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "deep-research-mcp.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "deep-research-mcp.name" . }}
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: {{ include "deep-research-mcp.fullname" . }}-sa
+      containers:
+        - name: deep-research-mcp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+              name: http
+          envFrom:
+            - configMapRef:
+                name: {{ include "deep-research-mcp.fullname" . }}-env

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: deep-research-mcp
+description: A Helm chart for deploying the deep_research_mcp Python app
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
